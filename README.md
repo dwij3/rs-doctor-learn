@@ -1,40 +1,151 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
+Sure! Here's a complete `README.md` file combining everything you've asked for in a clean, well-structured format:
 
-## Getting Started
+---
 
-First, run the development server:
+```markdown
+# 🧮 Calculator App + RSDoctor Integration
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+This project demonstrates a simple **Calculator App** built with **Next.js**, along with an integration of **[RSDoctor](https://rsdoctor.dev)** — a powerful diagnostic tool that helps analyze your app’s performance, routing structure, and build configuration.
+
+---
+
+## 🚀 Features
+
+- ✅ A basic Calculator accessible at `/calc`
+- 📊 Integrated **RSDoctor** plugin
+- ⚡ Built using **Next.js** and **TypeScript**
+
+---
+
+## 🧮 Calculator App
+
+A minimal calculator is available at:
+
+```
+http://localhost:3000/calc
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+It supports basic arithmetic operations and is built as a learning component to demonstrate component-based development and routing in Next.js.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+---
 
-[API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+## 🔍 RSDoctor Plugin Integration
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) instead of React pages.
+We’ve integrated **RSDoctor** to analyze the build and runtime performance of our app.
 
-This project uses [`next/font`](https://nextjs.org/docs/pages/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 📦 Installation
 
-## Learn More
+Install RSDoctor plugin via npm:
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+yarn add @rsdoctor/webpack-plugin -D
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn-pages-router) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 🛠️ Integration Steps
 
-## Deploy on Vercel
+Update your `next.config.js` or `next.config.ts` like so:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```ts
+import type { NextConfig } from 'next';
+import { RsdoctorWebpackPlugin } from '@rsdoctor/webpack-plugin';
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/building-your-application/deploying) for more details.
+const rsDoctorEnabled = process.env.RS_DOCTOR === 'true';
+
+
+const nextConfig: NextConfig = {
+  /* config options here */
+  webpack: (config) => {
+    console.log('conf!!' , config)
+    if(rsDoctorEnabled){
+      if (config.name === 'client') {
+        config.plugins.push(
+          new RsdoctorWebpackPlugin({
+            disableClientServer: true,
+          }),
+        );
+      } else if (config.name === 'server') {
+        config.plugins.push(
+          new RsdoctorWebpackPlugin({
+            disableClientServer: true,
+            output: {
+              reportDir: './.next/server',
+            },
+          }),
+        );
+      }
+    }
+   
+    return config;
+  },
+};
+
+export default nextConfig;
+```
+
+---
+
+## 📊 Generating RSDoctor Report
+
+Once integrated, follow these steps to generate and view the report:
+
+### 1. Run a Production Build with RS_DOCTOR = true
+
+```bash
+yarn rs-doctor-build
+```
+
+This generates RSDoctor metrics under `.next/rsdoctor`.
+
+### 2. View the Report
+
+Run the CLI command to start the RSDoctor report:
+
+```bash
+yarn client:rsd
+
+or
+
+yarn server:rsd
+
+```
+
+This will launch an interactive report in your browser.
+
+---
+
+## ⚙️ Optional Runtime Collection (Client-side)
+
+To collect **runtime metrics** (like route loads, dynamic chunks), enable runtime data collection:
+
+```ts
+rsdoctor: {
+  enabled: true,
+  collectInRuntime: true,
+}
+```
+
+---
+
+## 📚 References
+
+- [RSDoctor Quick Start Guide](https://rsdoctor.dev/guide/start/quick-start)
+- [RSDoctor Plugin Configuration](https://rsdoctor.dev/guide/next-plugin/options)
+
+---
+
+## 🧑‍💻 Author & Contributing
+
+This project is for educational purposes. Feel free to fork it, try new ideas, and contribute.
+
+---
+
+## 📄 License
+
+MIT
+```
+
+---
+
+Let me know if you'd like this saved as a file or want to add badges, images, or links to your GitHub repo!

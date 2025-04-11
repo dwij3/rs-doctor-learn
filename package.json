@@ -5,23 +5,34 @@
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
+    "rs-doctor-build":"RS_DOCTOR=true yarn build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "client:rsd": "rsdoctor analyze --profile .next/.rsdoctor/manifest.json", 
+    "server:rsd": "rsdoctor analyze --profile .next/server/.rsdoctor/manifest.json"
   },
   "dependencies": {
+    "@rsdoctor/rspack-plugin": "^latest",
+    "next": "15.2.4",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "next": "15.2.4"
+    "react-dom": "^19.0.0"
   },
   "devDependencies": {
-    "typescript": "^5",
+    "@eslint/eslintrc": "^3",
+    "@rsdoctor/cli": "^1.0.1",
+    "@rsdoctor/webpack-plugin": "^1.0.1",
+    "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "@tailwindcss/postcss": "^4",
-    "tailwindcss": "^4",
+    "babel-loader": "^10.0.0",
+    "css-loader": "^7.1.2",
     "eslint": "^9",
     "eslint-config-next": "15.2.4",
-    "@eslint/eslintrc": "^3"
+    "style-loader": "^4.0.0",
+    "tailwindcss": "^4",
+    "typescript": "^5",
+    "webpack": "^5.98.0",
+    "webpack-bundle-analyzer": "^4.10.2"
   }
 }
