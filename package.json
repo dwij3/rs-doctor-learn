@@ -5,9 +5,8 @@
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
-    "rs-doctor-build":"RS_DOCTOR=true yarn build",
+    "next-rs-doctor-build":"RS_DOCTOR=true yarn build",
     "start": "next start",
-    "lint": "next lint",
     "client:rsd": "rsdoctor analyze --profile .next/.rsdoctor/manifest.json", 
     "server:rsd": "rsdoctor analyze --profile .next/server/.rsdoctor/manifest.json"
   },
@@ -18,7 +17,6 @@
     "react-dom": "^19.0.0"
   },
   "devDependencies": {
-    "@eslint/eslintrc": "^3",
     "@rsdoctor/cli": "^1.0.1",
     "@rsdoctor/webpack-plugin": "^1.0.1",
     "@tailwindcss/postcss": "^4",
@@ -27,8 +25,6 @@
     "@types/react-dom": "^19",
     "babel-loader": "^10.0.0",
     "css-loader": "^7.1.2",
-    "eslint": "^9",
-    "eslint-config-next": "15.2.4",
     "style-loader": "^4.0.0",
     "tailwindcss": "^4",
     "typescript": "^5",
